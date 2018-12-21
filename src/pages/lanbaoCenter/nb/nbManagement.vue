@@ -17,6 +17,8 @@
         <v-filter :show="showFilter" @hide="hideFilter" ref="filter"></v-filter>
         <!-- 查询面板 -->
         <v-search :show="showsearch" @hide="hideSearchBar" @setData="submit" ref="search"></v-search>
+        <!-- 新增 -->
+        <v-add :show="showAddPage" @hide="hideSearchBar" @setData="submit" ref="addpage"></v-add>
         <!-- 记录列表页 -->
         <div class="record-body" style="height:100%;overflow:auto;">
             <div class="record-part">
@@ -46,7 +48,7 @@
                                     </div>
                                     <div>
                                         <span class="label">年保费用：</span>
-                                        <span class="red" style="width:7rem;">{{data.Balance}}￥</span>
+                                        <span class="red" style="width:6rem;">{{data.Balance}}￥</span>
                                         &emsp;
                                         <span class="label">已缴费用：</span>
                                         <span class="red">{{data.Balance}}￥</span>
@@ -81,7 +83,7 @@
             :actions="actions"
             v-model="sheetVisible">
         </mt-actionsheet>
-        <div id="addBtn">+</div>
+        <div id="addBtn" @click="showAddPageMethod">+</div>
   </div>
 </template>
 
@@ -92,6 +94,7 @@ import { MessageBox } from 'mint-ui';
 import recharge from "@/pages/lanbaoCenter/cz/rechargeMoney"
 import filter from "@/pages/lanbaoCenter/cz/filter"
 import search from "@/pages/lanbaoCenter/nb/search"
+import add from "@/pages/lanbaoCenter/nb/add"
 
 export default {
     data () {
@@ -100,6 +103,7 @@ export default {
             showRecharge:false,//显示充值页面
             showFilter:false,//显示筛选面板
             sheetVisible:false,//显示操作按钮
+            showAddPage:false,//显示操作按钮
             loading:false,
             totalNum:0,
             pageSize:20,
@@ -132,6 +136,7 @@ export default {
         "v-recharge":recharge,
         "v-filter":filter,
         "v-search":search,
+        "v-add":add,
     },
     methods: {
         // 显示隐藏搜索栏
@@ -241,6 +246,9 @@ export default {
         },
         showdetailBar(index){
             this.sheetVisible = !this.sheetVisible
+        },
+        showAddPageMethod(){
+            this.showAddPage = !this.showAddPage
         }
     },
     watch:{

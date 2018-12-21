@@ -19,17 +19,9 @@
     data () {
       return {
         lists: [
-          // {
-          //   title:"物流管理",
-          //   children:[
-          //     {name:"新增物流",icon:'add',url:"addwl"},
-          //     {name:"开单记录",icon:'record',url:"wlrecord"},
-          //   ]
-          // },
           {
             title:"蓝保中心",
             children:[
-              // {name:"保险充值",icon:'add',url:"addwl"},
               {name:"签约记录",icon:'record',url:"czrecord"},
               {name:"账户记录",icon:'record',url:"zhrecord"},
               {name:"年保管理",icon:'record',url:"nbManagement"},
