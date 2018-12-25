@@ -49,7 +49,7 @@ module.exports = {
   devServer: {
     historyApiFallbak: true,
     hot: true,
-    host: "192.168.0.94",   //填写你自己的IP地址
+    host: "192.168.0.116",   //填写你自己的IP地址
     port: 8080,   //填写刚刚在dev字段中找到的port端口号
     inline: true,
     progress: true

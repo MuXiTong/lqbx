@@ -83,6 +83,7 @@
     </div>
     <div class="wt-part">
       <ul>
+        <li><div>登录账号</div><div>{{users.userInfo.userid}}</div></li>
         <li><div>登录网点</div><div>{{users.userInfo.loginwebid}}</div></li>
         <li><div>所在权限组</div><div>{{users.userInfo.groupname}}</div></li>
       </ul>

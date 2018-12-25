@@ -47,13 +47,13 @@ Vue.prototype.$http = axios
 // import echarts from 'echarts'
 // Vue.prototype.$echarts = echarts 
 
-import FastClick from 'fastclick'
+// import FastClick from 'fastclick'
 
-if ('addEventListener' in document) {
-    document.addEventListener('DOMContentLoaded', function() {
-        FastClick.attach(document.body);
-    }, false);
-}
+// if ('addEventListener' in document) {
+//     document.addEventListener('DOMContentLoaded', function() {
+//         FastClick.attach(document.body);
+//     }, false);
+// }
 
 Vue.config.productionTip = false
 

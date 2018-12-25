@@ -1,42 +1,44 @@
-<!-- 新增物流公司 -->
+<!-- 新增年保 -->
 <template>
-  <div class="contains" style="padding-top:0;padding-bottom:50px;" v-show="show">
+  <div class="contains addcontains" style="padding-bottom:50px;" v-show="show">
         <mt-header title="新增物流" fixed>
-            <router-link to="/" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="hide" slot="left"></mt-button>
         </mt-header>
         <div class="lq-form-content addwl-outer">
             <div>
                 <div class="infoPart">
-                    <div class="infoTit">物流信息</div>
+                    <div class="infoTit">基本信息</div>
+                    <mt-field label="流水号" type="text" v-model="form.numorder" disabled></mt-field>
                     <div class="lq-part" @click="openComPicker(true)">
-                        <mt-cell title="物流公司" is-link :value="form.WLGSMC"></mt-cell>
+                        <mt-cell title="保险公司" is-link :value="coidinsurertext"></mt-cell>
                     </div>
-                    <mt-field label="物流公司地址" type="text" v-model="form.WLDZ" ></mt-field>
-                    <mt-field label="发货点名称" type="text" v-model="form.FHDMC" :state="errmsg.FHDMC.state"></mt-field>
+                    <mt-field label="企业ID" type="text" v-model="form.tmscode" ></mt-field>
+                    <mt-field label="公司名称" type="text" v-model="form.comname" ></mt-field>
+                    <mt-field label="公司地址" type="text" v-model="form.comaddr" ></mt-field>
+                    <mt-field label="联系人" type="text" v-model="form.comman" ></mt-field>
+                    <mt-field label="联系手机" type="text" v-model="form.commb" ></mt-field>
+                    <mt-field label="联系电话" type="text" v-model="form.comtel"></mt-field>
+                    
                 </div>
 
                 <div class="infoPart">
-                    <div class="infoTit">寄件信息</div>
-                    <mt-field label="运单号" type="text" v-model="form.YDH" :state="errmsg.YDH.state"></mt-field>
-                    <mt-field label="寄件人" type="text" v-model="form.JJRXM" :state="errmsg.JJRXM.state"></mt-field>
-                    <mt-field label="寄件人身份证号" type="text" v-model="form.JJRSFZH"></mt-field>
-                    <mt-field label="寄件人电话" type="tel" v-model="form.JJRDH"></mt-field>
-                    <div @click="openPicker()">
-                        <mt-field label="寄件时间" type="text" v-model="form.JJSJ" :state="errmsg.JJSJ.state" :disabled='true' ></mt-field>
+                    <div class="infoTit">年保信息</div>
+                    <mt-field label="年保费用" type="text" v-model="form.accnianbao"></mt-field>
+                    <mt-field label="已缴费用" type="text" v-model="form.accnianbaoyj"></mt-field>
+                    <div @click="openPicker('startdate')">
+                        <mt-cell title="开始时间" is-link :value="form.startdate"></mt-cell>
                     </div>
-                    <mt-field label="寄件地址" type="text" v-model="form.JJDZ" :state="errmsg.JJDZ.state"></mt-field>
-                    <mt-field label="寄件物品" type="text" v-model="form.JJWP" ></mt-field>
-                    <mt-field label="件数" type="number" v-model="form.JS" ></mt-field>
+                    <div @click="openPicker('enddate')">
+                        <mt-cell title="结束时间" is-link :value="form.enddate"></mt-cell>
+                    </div>
                 </div>
                 <div class="infoPart">
-                    <div class="infoTit">收件信息</div>
-                    <mt-field label="收件人姓名" type="text" v-model="form.SJRXM" :state="errmsg.SJRXM.state"></mt-field>
-                    <mt-field label="收件人身份证号" type="text" v-model="form.SJRSFZH" ></mt-field>
-                    <mt-field label="收件人地址" type="text" v-model="form.SJRDZ" :state="errmsg.SJRDZ.state"></mt-field>
-                    <mt-field label="收件人电话" type="tel" v-model="form.SJRDH" ></mt-field>
-                    <mt-field label="到货点名称" type="text" v-model="form.DHDMC" :state="errmsg.DHDMC.state"></mt-field>
+                    <div class="infoTit">登记信息</div>
+                    <mt-field label="登记时间" type="text" v-model="form.registerdate" disabled></mt-field>
+                    <mt-field label="登记部门" type="text" v-model="form.registersite" disabled></mt-field>
+                    <mt-field label="登记人" type="text" v-model="form.registerman" disabled></mt-field>
+                    <mt-field label="业务员" type="text" v-model="form.yewuyuan" ></mt-field>
+                    <mt-field label="备注" type="textarea" v-model="form.remark" ></mt-field>
                 </div>
                 <!-- 上传图片控件 -->
                 <div class="infoPart">
@@ -51,34 +53,34 @@
                         :editCallBack="function(){}"
                     ></uploader>
                 </div>
-                <!-- 时间控件 -->
-                <mt-datetime-picker
-                ref="datepicker"
-                v-model="dateTime"
-                type="datetime"
-                :endDate="enddate"
-                @confirm="handleConfirm">
-                </mt-datetime-picker>
-                <!-- 下拉列表 -->
-                <mt-popup  v-model="isshow" position="bottom" class="lq-picker-body">
-                    <mt-picker :slots="slots" showToolbar :valueKey="slotsValueKey"	@change="onValuesChange">
-                        <div class="picker-filterbody">
-                            <div class="picker-filterInput">
-                                <mt-field placeholder="输入筛选数据" v-model="pickerFilter"></mt-field>
-                            </div>
-                            <div class="picker-btn-body">
-                                <div class="picker-btn picker-btn-sure"  @click="sureSelect">确定</div>
-                                <div class="picker-btn picker-btn-cancel"  @click="openComPicker">取消</div>
-                            </div>                    
-                        </div>
-                    </mt-picker>
-                </mt-popup>
+                
             </div>
         </div>
         <div class="lq-btn-content">
             <mt-button type="primary" size="large" @click="submit" >确定</mt-button>
         </div>
-
+        <!-- 时间控件 -->
+        <mt-datetime-picker
+        ref="datepicker"
+        v-model="dateTime"
+        type="datetime"
+        :endDate="enddate"
+        @confirm="handleConfirm">
+        </mt-datetime-picker>
+        <!-- 下拉列表 -->
+        <mt-popup  v-model="isshow" position="bottom" class="lq-picker-body">
+            <mt-picker :slots="slots" showToolbar :valueKey="slotsValueKey"	@change="onValuesChange">
+                <div class="picker-filterbody">
+                    <div class="picker-filterInput">
+                        <mt-field placeholder="输入筛选数据" v-model="pickerFilter"></mt-field>
+                    </div>
+                    <div class="picker-btn-body">
+                        <div class="picker-btn picker-btn-sure"  @click="sureSelect">确定</div>
+                        <div class="picker-btn picker-btn-cancel"  @click="openComPicker">取消</div>
+                    </div>                    
+                </div>
+            </mt-picker>
+        </mt-popup>
   </div>
 </template>
 
@@ -87,6 +89,7 @@ import uploader from "@/components/uploader"
 import { Toast } from 'mint-ui';
 import { Indicator } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
+import { mapState } from 'vuex'
 export default {
     props:{
         show:{
@@ -98,72 +101,45 @@ export default {
         return {
             // 提交表单数据
             form:{
-                "WLGSMC": "",
-                "WLDZ": "",
-                "FHDMC": "",
-                "YDH": "",
-                "JJRXM": "",
-                "JJRSFZH": "",
-                "JJRDH": "",
-                "JJSJ": this.dateFormat(new Date(),'yyyy-MM-dd hh:mm'),
-                "JJDZ": "",
-                "JJWP": "",
-                "JS": "",
-                "SJRXM": "",
-                "SJRSFZH": "",
-                "SJRDZ": "",
-                "SJRDH": "",
-                "DHDMC": "",
-                "SupName": "",
-                "SupNO": "",
+                "id": "",
+                "numorder": "",
+                "cominsurer": "",
+                "tmscode": "",
+                "comname": "",
+                "comaddr": "",
+                "comman": "",
+                "commb": "",
+                "comtel": "",
+                "accnianbao": "",
+                "accnianbaoyj": "",
+                "startdate": this.dateFormat(new Date(),'yyyy-MM-dd hh:mm'),
+                "enddate": this.dateFormat(new Date(),'yyyy-MM-dd hh:mm'),
+                "registerdate": this.dateFormat(new Date(),'yyyy-MM-dd hh:mm'),
+                "registersite": "",
+                "yewuyuan": "",
+                "registerman": "",
+                "remark": "",
             },
+            coidinsurertext:"",
             errmsg:{
-                "WLGSMC": {
-                    "msg": "物流公司名称不能为空",
-                    "state": null
+                "cominsurer": {
+                    "msg": "保险公司名称不能为空",
                 },
-                "FHDMC": {
-                    "msg": "发货点名称不能为空",
-                    "state": null
+                "comname": {
+                    "msg": "公司名称不能为空",
                 },
-
-                "YDH": {
-                    "msg": "运单号不能为空",
-                    "state": null
+                "accnianbao": {
+                    "msg": "年保费用不能为空",
                 },
-                "JJRXM": {
-                    "msg": "寄件人不能为空",
-                    "state": null
+                "accnianbaoyj": {
+                    "msg": "已缴费用不能为空",
                 },
-   
-                "JJSJ": {
-                    "msg": "寄件时间不能为空",
-                    "state": null
+                "yewuyuan": {
+                    "msg": "业务员不能为空",
                 },
-                "JJDZ": {
-                    "msg": "寄件地址不能为空",
-                    "state": null
-                },
-  
-                "SJRXM": {
-                    "msg": "收件人姓名不能为空",
-                    "state": null
-                },
-
-                "SJRDZ": {
-                    "msg": "收件人地址不能为空",
-                    "state": null
-                },
- 
-                "DHDMC": {
-                    "msg": "到货点名称不能为空",
-                    "state": null
-                }
             },
             errImgName:[],
             tb:[],
-            dateTime:new Date(),
-            enddate:new Date(),
             PicBatch:this.getGuid(),
             imgUpLoadUrl:this.$http.defaults.baseURL == "/wl" ? "/uploader" : "/ImageAPI/ImgUploadFile",// 根据基本路径赋值上传接口
             isshow:false,
@@ -178,28 +154,32 @@ export default {
                     defaultIndex:1,
                 }
             ],
-            slotsValueKey:"SupplierName",
-            wlCompanyData:[],
-            pickerSelVal:""
+            slotsValueKey:"text",
+            bxgsData:[
+                { id: 'WTTX_RBCX', text: "湖南人保" },
+                { id: "WTTX_RBCX_NEW", text: "云南人保" },
+                { id: "WTTX_ZHBX", text: "中华保险" },
+                { id: "WTTX_ZTBX", text: "永诚保险" },
+            ],
+            pickerSelVal:"",
+            // 时间控件用到
+            dateTime:new Date(),
+            enddate:new Date(),
+            curSelDate:"",
         }
     },
     components:{
         "uploader":uploader
     },
+    computed: mapState({ users: state => state }),
     methods: {
         // 验证表单是否为空
         valid(){
-            for( var key in this.form ){
-                if(this.errmsg[key]){
-                    if( !this.form[key] ){
-                        this.showMsg(this.errmsg[key]['msg']);
-                        this.errmsg[key]['state'] = "error";
-                        return false;
-                    }else{
-                        this.errmsg[key]['state'] = "success";
-                    }                    
+            for( var key in this.errmsg ){
+                if(!this.form[key]){
+                    this.showMsg(this.errmsg[key]['msg']);
+                    return false;
                 }
-
             }
             return true;
         },
@@ -415,35 +395,12 @@ export default {
         },
         // 打开日期控件
         openPicker(type){
+            this.curSelDate = type
             this.$refs.datepicker.open();
         },
         // 确定时间的时候格式化时间
         handleConfirm:function(val){
-            this.form.JJSJ = this.dateFormat(val,'yyyy-MM-dd hh:mm');
-        },
-        // 获取物流公司数据
-        companyName(){
-            let _this = this;
-            _this.$http({
-                method:"post",
-                data:{
-                    procedure:"Q450"
-                }
-            }).then(response => {
-                let result = response.data
-                console.log(result)
-                if( result.state ){                   
-                    _this.wlCompanyData = result.data.Table
-                }else{
-                    Toast({
-                        message: result.msg,
-                        position: 'top',
-                        duration: 3000
-                    });
-                }
-            }, result => {
-                
-            })
+            this.form[this.curSelDate] = this.dateFormat(val,'yyyy-MM-dd hh:mm');
         },
         // 下拉筛选数据
         filterData(val){
@@ -463,15 +420,14 @@ export default {
         // 确定选择
         sureSelect(){
             this.isshow = false;
-            this.form.WLGSMC = this.pickerSelVal[this.slotsValueKey];
-            this.form.SupName = this.pickerSelVal[this.slotsValueKey];
-            this.form.SupNO = this.pickerSelVal['SupplierNO'];
+            this.form.cominsurer = this.pickerSelVal['id'];
+            this.coidinsurertext = this.pickerSelVal['text'];
         },
         // 打开下拉选择列表 || 取消列表
         openComPicker(isOpen){
             this.isshow = !this.isshow;
             if(isOpen){
-                this.slots[0].values = this.wlCompanyData;
+                this.slots[0].values = this.bxgsData;
                 this.pickerFilter = '';
             }
         },
@@ -480,6 +436,9 @@ export default {
             if(values[0]){
                 this.pickerSelVal = values[0];
             }            
+        },
+        hide(data){
+            this.$emit('hide',data); 
         }
     },
     watch:{
@@ -489,13 +448,22 @@ export default {
         }
     },
     created:function(){
-        this.companyName()
+        this.form.registersite = this.users.userInfo.loginwebid
+        this.form.registerman = this.users.userInfo.username
+        
     }
 }
 
 </script>
 <style type="text/css" lang="scss">
-
+    .addcontains{
+        position: fixed;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 99;
+        background: #fff;
+    }
     .addwl-outer.lq-form-content {
         height: 100%;
         margin-top: 0;

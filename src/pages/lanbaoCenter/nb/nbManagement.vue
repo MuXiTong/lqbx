@@ -11,14 +11,14 @@
             </mt-button>
             <mt-button icon="search" slot="right" @click="showsearchBar"></mt-button>
         </mt-header>
-        <!-- 充值 -->
-        <v-recharge :show="showRecharge" @hide="hideRecharge" ref="recharge"></v-recharge>
         <!-- 筛选面板 -->
         <v-filter :show="showFilter" @hide="hideFilter" ref="filter"></v-filter>
         <!-- 查询面板 -->
         <v-search :show="showsearch" @hide="hideSearchBar" @setData="submit" ref="search"></v-search>
         <!-- 新增 -->
-        <v-add :show="showAddPage" @hide="hideSearchBar" @setData="submit" ref="addpage"></v-add>
+        <v-add :show="showAddPage" @hide="hideAddPage"  ref="addpage"></v-add>
+        <!-- 详情页 -->
+        <v-details :show="showDetailsPage" @hide="hideDetailsPage"  ref="detailspage"></v-details>
         <!-- 记录列表页 -->
         <div class="record-body" style="height:100%;overflow:auto;">
             <div class="record-part">
@@ -91,19 +91,19 @@
 import { Toast } from 'mint-ui';
 import { Indicator } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
-import recharge from "@/pages/lanbaoCenter/cz/rechargeMoney"
 import filter from "@/pages/lanbaoCenter/cz/filter"
 import search from "@/pages/lanbaoCenter/nb/search"
 import add from "@/pages/lanbaoCenter/nb/add"
+import details from "@/pages/lanbaoCenter/nb/details"
 
 export default {
     data () {
         return {
             showsearch:false,//显示筛选面板
-            showRecharge:false,//显示充值页面
             showFilter:false,//显示筛选面板
             sheetVisible:false,//显示操作按钮
-            showAddPage:false,//显示操作按钮
+            showAddPage:false,//显示新增界面
+            showDetailsPage:false,//显示详情界面
             loading:false,
             totalNum:0,
             pageSize:20,
@@ -111,6 +111,7 @@ export default {
             allList:[],
             noChangeAllData:[],
             list:[],
+            curSelIndex:0,
             // 操作按钮
             actions:[
                 {
@@ -133,10 +134,10 @@ export default {
         };
     },
     components:{
-        "v-recharge":recharge,
         "v-filter":filter,
         "v-search":search,
         "v-add":add,
+        "v-details":details,
     },
     methods: {
         // 显示隐藏搜索栏
@@ -217,13 +218,6 @@ export default {
                 _this.loading = false;
             },10);
         },
-        rechargehandle(index){
-            this.$refs.recharge.setData(this.list[index])
-            this.showRecharge = true;
-        },
-        hideRecharge(){
-            this.showRecharge = false
-        },
         hideFilter(filterData){
             this.showFilter = false
             if(!filterData.type){
@@ -245,10 +239,21 @@ export default {
             this.showFilter = !this.showFilter
         },
         showdetailBar(index){
+            this.curSelIndex = index;
             this.sheetVisible = !this.sheetVisible
         },
         showAddPageMethod(){
             this.showAddPage = !this.showAddPage
+        },
+        hideAddPage(){
+            this.showAddPage = false
+        },
+        hideDetailsPage(){
+            this.showDetailsPage = false
+        },
+        lookDetail(){
+            this.showDetailsPage = true
+            this.$refs.detailspage.setData(this.list[this.curSelIndex])
         }
     },
     watch:{
