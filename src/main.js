@@ -22,7 +22,7 @@ import axios from 'axios'
 import md5 from 'js-md5';
 // 开发环境
 // axios.defaults.baseURL = 'http://101.200.223.57:5151/Comm/CommonData_Phone';
-axios.defaults.baseURL = '/wl';
+axios.defaults.baseURL = process.env.NODE_ENV == "development" ? '/wl' : '/Comm/CommonData_Phone';
 // 正式环境
 // axios.defaults.baseURL = '/Comm/CommonData';
 // axios.defaults.baseURL = '/Comm/CommonData_Phone';
@@ -56,8 +56,6 @@ Vue.prototype.$http = axios
 // }
 
 Vue.config.productionTip = false
-
-
 
 router.beforeEach(({meta, path}, from, next) => {
     let { auth = true } = meta

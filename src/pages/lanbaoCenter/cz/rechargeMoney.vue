@@ -124,7 +124,7 @@ export default {
 </script>
 <style type="text/css" lang="scss" scoped>
     .rechargeBody{
-        position: fixed;
+        position: absolute;
         left: 0;
         top:0;
         background: #eee;

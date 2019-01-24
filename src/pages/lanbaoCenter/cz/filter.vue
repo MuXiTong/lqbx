@@ -87,7 +87,7 @@ export default {
         border-bottom: 1px solid #eee;
     }
     .filterBar{
-        position: fixed;
+        position: absolute;
         width: 100%;
         padding-top: 0;
         z-index: 999;
