@@ -61,7 +61,7 @@ export default {
             },
             imgUpLoadUrl:this.$http.defaults.baseURL+"/CommonInsurer/UploadImg",// 根据基本路径赋值上传接口
             errImgName:[],
-            pid:"400"
+            pid:""
         }
     },
     computed: mapState({ users: state => state }),
