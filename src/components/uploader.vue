@@ -27,31 +27,34 @@
 </template>
 <script>
     import { Indicator } from 'mint-ui';
+    import md5 from 'js-md5';
     export default {
         props: {
+            // 上传图片接口
             src: {
                 type: String,
                 required: true
             },
-            uploadedMethod:{//上传成功后回调函数
-                type:Function,
-                required: true
+            //上传成功后回调函数
+            uploadedSuccess:{
+                type:Function
             },
+            // 显示上传图片按钮
             showUploadedBtn:{
                 type:Boolean,
                 default:true
             },
-            uploaderImgToServer:{
+            // 所有图片上传成功后调用此函数
+            uploadedComplete:{
                 type:Function,
-                required: true
             },
+            // 图片上传失败调用次函数
             uploaderError:{
                 type:Function,
-                required: true
             },
+            // 编辑图片的回调函数
             editCallBack:{
                 type:Function,
-                required: true
             }
         },
         data() {
@@ -88,7 +91,7 @@
                         let data = xhr.response
                         this.status = 'finished'
                         data = (typeof data == "string") ? JSON.parse(data) : data 
-                        this.uploadedMethod && this.uploadedMethod(data)
+                        this.uploadedSuccess && this.uploadedSuccess(data)
                         console.log('upload success!')
                     } else {
                         console.log(`error：error code ${xhr.status}`)
@@ -97,7 +100,7 @@
             },
             */
             // 因项目上传接口不能一次性上传多张图片，因此改造成循环上传，正常情况是上面注释的代码。
-            submit() {
+            submit(pid) {
                 if (this.files.length === 0) {
                     console.warn('no file!');
                     return
@@ -111,12 +114,26 @@
                     if( item.isold ){
                         num+=1;
                         if(num == this.files.length){
-                            this.uploaderImgToServer && this.uploaderImgToServer();
+                            this.uploadedComplete && this.uploadedComplete();
                             Indicator.close();
                         }
                     }else{
-                        let formData = new FormData()
+                        let formData = new FormData();
+                        let md5str = "lqapi!@#";
+                        let lqtmscode = "71053";
+                        let source = "lqcms";
+                        let timestamp = new Date().getTime();
+                        let token = md5(lqtmscode + source + md5str);
+                        let man = JSON.parse(sessionStorage.getItem('user')).username;
+
                         formData.append(item.name, item.file)
+                        formData.append('pid', pid)
+                        formData.append('man', man)
+                        formData.append('lqtmscode', lqtmscode)
+                        formData.append('source', source)
+                        formData.append('timestamp', timestamp)
+                        formData.append('token', token)
+
                         let xhr = new XMLHttpRequest()
                         xhr.upload.addEventListener('progress', this.uploadProgress, false)
                         xhr.open('POST', this.src, true)
@@ -129,14 +146,14 @@
                                 let data = xhr.response
                                 this.status = 'finished'
                                 data = (typeof data == "string") ? JSON.parse(data) : data 
-                                this.uploadedMethod && this.uploadedMethod(data,item,this.files.length)
+                                this.uploadedSuccess && this.uploadedSuccess(data,item,this.files.length)
                                 console.log('upload success!')
                             } else {
                                 console.log(`error：error code ${xhr.status}`)
                                 this.uploaderError && this.uploaderError(item)
                             }
                             if(num == this.files.length){
-                                this.uploaderImgToServer && this.uploaderImgToServer();
+                                this.uploadedComplete && this.uploadedComplete();
                                 Indicator.close();
                             }
                         }    

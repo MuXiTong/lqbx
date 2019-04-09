@@ -21,12 +21,7 @@ import '@/css/common.css'
 import axios from 'axios'
 import md5 from 'js-md5';
 // 开发环境
-// axios.defaults.baseURL = 'http://101.200.223.57:5151/Comm/CommonData_Phone';
-axios.defaults.baseURL = process.env.NODE_ENV == "development" ? '/wl' : '/Comm/CommonData_Phone';
-// 正式环境
-// axios.defaults.baseURL = '/Comm/CommonData';
-// axios.defaults.baseURL = '/Comm/CommonData_Phone';
-
+axios.defaults.baseURL = process.env.NODE_ENV == "development" ? '/wl' : '';
 axios.defaults.headers.post['content-Type'] = 'appliction/x-www-form-urlencoded';
 axios.defaults.transformRequest = [function (data) {
     data = data || {}
@@ -43,17 +38,6 @@ axios.defaults.transformRequest = [function (data) {
     return ret
 }];
 Vue.prototype.$http = axios
-
-// import echarts from 'echarts'
-// Vue.prototype.$echarts = echarts 
-
-// import FastClick from 'fastclick'
-
-// if ('addEventListener' in document) {
-//     document.addEventListener('DOMContentLoaded', function() {
-//         FastClick.attach(document.body);
-//     }, false);
-// }
 
 Vue.config.productionTip = false
 

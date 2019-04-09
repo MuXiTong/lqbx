@@ -24,7 +24,7 @@
             children:[
               {name:"签约记录",icon:'record',url:"czrecord"},
               {name:"账户记录",icon:'record',url:"zhrecord"},
-              {name:"年保管理",icon:'record',url:"nbManagement"},
+              // {name:"年保管理",icon:'record',url:"nbManagement"},
             ]
           }
         ]

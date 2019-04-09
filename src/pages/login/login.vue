@@ -7,8 +7,8 @@
             </div>
             <!-- <div class="lq-title">蓝保中心</div> -->
             <div>
-                <mt-field label="账号" :placeholder="placeholders.userid" :state="state.userid" v-model="form.userid"></mt-field>
-                <mt-field label="密码" :placeholder="placeholders.password" :state="state.password" type="password" v-model="form.password"></mt-field>
+                <mt-field label="账号" :placeholder="placeholders.userid" :state="state.userid" v-model="form.userid" autocomplete="false"></mt-field>
+                <mt-field label="密码" :placeholder="placeholders.password" :state="state.password" type="password" v-model="form.password" autocomplete="false"></mt-field>
             </div>
             
             <div class="wt-login-btn">

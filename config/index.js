@@ -9,7 +9,7 @@ var proxyTable = {
       pathRewrite:{
           '^/wl':''
       }
-  },
+  }
 }
 module.exports = {
   build: {
@@ -34,7 +34,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port:8081,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -49,8 +49,8 @@ module.exports = {
   devServer: {
     historyApiFallbak: true,
     hot: true,
-    host: "192.168.0.65",   //填写你自己的IP地址
-    port: 8080,   //填写刚刚在dev字段中找到的port端口号
+    host: "192.168.0.90",   //填写你自己的IP地址
+    port: 8081,   //填写刚刚在dev字段中找到的port端口号
     inline: true,
     progress: true
   }
