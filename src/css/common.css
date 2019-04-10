@@ -122,3 +122,6 @@ input[type="submit"],input[type="reset"],input[type="button"],button {-webkit-ap
     height: 2rem;
     line-height: 2rem;
 }
+.redBg{
+    background: #ffefed !important;
+}

@@ -9,6 +9,8 @@ const home = resolve => require(['@/pages/home/home'], resolve)
 const user = resolve => require(['@/pages/user/user'], resolve)
 const czrecord = resolve => require(['@/pages/lanbaoCenter/cz/czrecord'], resolve)
 const zhrecord = resolve => require(['@/pages/lanbaoCenter/cz/zhrecord'], resolve)
+const yjrecord = resolve => require(['@/pages/lanbaoCenter/cz/yjrecord'], resolve)
+const czzjrecord = resolve => require(['@/pages/lanbaoCenter/cz/czzjrecord'], resolve)
 const nbManagement = resolve => require(['@/pages/lanbaoCenter/nb/nbManagement'], resolve)
 
 Vue.use(Router)
@@ -48,9 +50,19 @@ export default new Router({
                     component: czrecord
                 },
                 {
-                    path: '/zhrecord', //签约记录
-                    name: 'zhrecord', //签约记录
+                    path: '/zhrecord', //账户记录
+                    name: 'zhrecord', //账户记录
                     component: zhrecord
+                },
+                {
+                    path: '/yjrecord', //预警记录
+                    name: 'yjrecord', //预警记录
+                    component: yjrecord
+                },
+                {
+                    path: '/czzjrecord', //充值足迹
+                    name: 'czzjrecord', //充值足迹
+                    component: czzjrecord
                 },
                 {
                     path: '/nbManagement', //年保管理

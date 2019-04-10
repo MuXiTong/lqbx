@@ -1,7 +1,7 @@
-<!-- 账户记录 -->
+<!-- 预警记录 -->
 <template>
   <div class="contains" :class="{overflowHidden:showsearch}" style="overflow:hidden;">
-        <mt-header :title="'账户记录'+( allList.length > 0 ? '【'+ allList.length + '】' : '' )" fixed>
+        <mt-header :title="'预警记录'+( allList.length > 0 ? '【'+ allList.length + '】' : '' )" fixed>
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
@@ -28,7 +28,7 @@
                     infinite-scroll-disabled="loading"
                     infinite-scroll-distance="10">
                     <template v-if="list.length > 0">
-                        <li class="record-list-part" v-for="(data,i) in list" :key="i" :class="{redBg:data.Balance && data.Balance <=500 }">
+                        <li class="record-list-part" v-for="(data,i) in list" :key="i" >
                             <div class="record-list-content">
                                 <div class="record-list-content-center">
                                     <div>
@@ -52,7 +52,7 @@
                                         <span class="label">账户支出：</span>
                                         <span class="green" style="width:6rem;">{{data.Disbursement}}￥</span>
                                         <span v-show="data.Balance" class="label">剩余保费：</span>
-                                        <span v-show="data.Balance" class="red" >{{data.Balance}}￥</span>
+                                        <span v-show="data.Balance" class="red">{{data.Balance}}￥</span>
                                         
                                     </div>
                                     <div class="btn-body">
@@ -87,7 +87,7 @@
             v-model="showsearch"
             :modal="closeOnClickModal"
             position="right">
-            <mt-header title="账户记录查询" fixed>
+            <mt-header title="预警记录查询" fixed>
                 <mt-button slot="left" icon="back" @click="showsearchBar"></mt-button>
             </mt-header>
             <div class="lq-form-content">
@@ -197,7 +197,7 @@ export default {
             let parms = _this.form;
             _this.$http({
                 method:"post",
-                url:"/CommonInsurer/GetCompanyAccountInsurer",
+                url:"/CommonInsurer/GetCompanyAccountInsurerLess",
                 // data:parms
             }).then(response => {
                 let result = response.data

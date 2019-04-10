@@ -97,12 +97,13 @@ export default {
                 let result = response.data
                 Indicator.close();
                 if( result._status){
-                    let suc = Toast({
-                        message: '充值成功',
-                        iconClass: 'icon icon-success'
-                    });
+                    
                     _this.pid = result._message;
                     if( _this.$refs.uploader.files.length == 0 ){
+                        let suc = Toast({
+                            message: '充值成功',
+                            iconClass: 'icon icon-success'
+                        });
                         setTimeout(() => {
                             suc.close();
                             _this.hide("refresh");

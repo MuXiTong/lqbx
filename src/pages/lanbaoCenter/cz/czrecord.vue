@@ -9,7 +9,7 @@
             <mt-button slot="right" @click="showFilterBar">
                 <icon class="icon lq-icon-filter" name="filter" scale="4"></icon>
             </mt-button>
-            <mt-button icon="search" slot="right" @click="showsearchBar"></mt-button>
+            <!-- <mt-button icon="search" slot="right" @click="showsearchBar"></mt-button> -->
         </mt-header>
         <!-- 充值 -->
         <v-recharge :show="showRecharge" @hide="hideRecharge" ref="recharge"></v-recharge>
@@ -28,7 +28,7 @@
                     infinite-scroll-disabled="loading"
                     infinite-scroll-distance="10">
                     <template v-if="list.length > 0">
-                        <li class="record-list-part" v-for="(data,i) in list" :key="i" >
+                        <li class="record-list-part" v-for="(data,i) in list" :key="i" :class="{redBg:data.Balance && data.Balance <=500 }">
                             <div class="record-list-content">
                                 <div class="record-list-content-center">
                                     <div>
@@ -336,4 +336,5 @@ export default {
         vertical-align: middle;
         margin-right: 10px;
     }
+    
 </style>

@@ -1,6 +1,9 @@
 
 <template>
     <div class="loginbg">
+        <!-- 隐藏域，不显示浏览器默认的赋值 -->
+        <input type="text" style="position:fixed;left:-200%;">
+        <input type="password" style="position:fixed;left:-200%;">
         <div class="wt-login">
             <div class="wt-logo">
                 <img src="../../assets/logo.png"/>
