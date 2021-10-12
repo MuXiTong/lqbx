@@ -1,45 +1,28 @@
-<!-- 账户充值 -->
+<!-- 保险注册 -->
 <template>
   <div class="contains rechargeBody" v-show="show || isHomeCome">
-        <mt-header title="账户充值" fixed>
+        <mt-header title="保险注册" fixed>
             <router-link to="/" slot="left" v-if="isHomeCome">
                 <mt-button icon="back"></mt-button>
             </router-link>
             <mt-button v-else icon="back" slot="left" @click="hide"></mt-button>
         </mt-header>
         <div class="lq-form-content">
-            <template v-if="isHomeCome">
-                <div class="lq-part" @click="openComPicker('bxgs')">
-                    <mt-cell title="保险公司" is-link :value="form.insurername"></mt-cell>
-                </div>
-                <div class="lq-part" @click="openComPicker('company')">
-                    <mt-cell title="企业ID" is-link :value="form.tmscode"></mt-cell>
-                </div>
-                <div class="lq-part" @click="openComPicker('company')">
-                    <mt-cell title="公司名称" is-link :value="form.name"></mt-cell>
-                </div>
-            </template>
-            <template v-else>
-                <mt-field label="保险公司" type="text" v-model="form.insurername" disabled></mt-field>
-                <mt-field label="企业ID" type="text" v-model="form.tmscode" disabled ></mt-field>
-                <mt-field label="公司名称" type="text" v-model="form.name" disabled ></mt-field>
-            </template>
-            
-            
-            <mt-field label="充值金额" type="number" v-model="form.amount"></mt-field>
-            <mt-field label="业务员" type="text" v-model="form.yewuyuan"></mt-field>
-            <mt-field label="备注" type="textarea" v-model="form.remark" rows="3"></mt-field>
-            <!-- 上传图片控件 -->
-            <div class="infoPart">
-                <div class="infoTit">转款凭证</div>
-                <uploader 
-                    :src="imgUpLoadUrl"  
-                    :showUploadedBtn="false" 
-                    ref="uploader" 
-                    :uploadedComplete="uploadedComplete"
-                    :uploaderError="uploaderError"
-                ></uploader>
+            <div class="search-out">
+                <mt-field label="企业ID" type="text" v-model="form.TMSCode" ></mt-field>
+                <button class="search-btn">检测</button>
             </div>
+            <mt-field label="公司名称" type="text" v-model="form.Name" ></mt-field>
+            <div class="lq-part" @click="openComPicker('bxgs')">
+                <mt-cell title="保险公司" is-link :value="form.insurername"></mt-cell>
+            </div>
+            <mt-field label="法人名称" type="text" v-model="form.LegalPerson"></mt-field>
+            <mt-field label="法人身份证" type="text" v-model="form.LP_IDCard"></mt-field>
+            <mt-field label="公司地址" type="text" v-model="form.comaddr"></mt-field>
+            <mt-field label="手机号码" type="number" v-model="form.LoginName"></mt-field>
+            <!-- <mt-field label="登录密码" type="text" v-model="form.password"></mt-field>
+            <mt-field label="确认密码" type="text" v-model="form.cpassword"></mt-field> -->
+            <!-- <mt-field label="技术支持" type="text" v-model="form.jsName"></mt-field> -->
         </div>
         <div class="lq-btn-content">
             <mt-button type="primary" size="large" @click="submit" >确定</mt-button>
@@ -71,7 +54,6 @@ import { Toast } from 'mint-ui';
 import { Indicator } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 import { mapState } from 'vuex'
-import uploader from "@/components/uploader"
 
 export default {
     props:{
@@ -87,17 +69,16 @@ export default {
             form:{
                 coidinsurer:"",//保险公司编号
                 insurername:"",//保险公司名称
-                coid:"",//物通企业编码
-                tmscode:"",//蓝桥企业ID
-                name:"",//公司名称
-                amount :"",//充值金额
-                yewuyuan:"",//业务员
-                remark :"",//备注
-                createby:""//操作人
+                TMSCode:"",//蓝桥企业ID
+                Name:"",//公司名称
+                LoginName:"",//手机号码
+                // password:"",//密码
+                // cpassword:"",//确认密码
+                LegalPerson:"",//法人
+                LP_IDCard:"",//法人身份证
+                comaddr:"",//公司地址
+                // jsName:"",//技术支持
             },
-            imgUpLoadUrl:this.$http.defaults.baseURL+"/CommonInsurer/UploadImg",// 根据基本路径赋值上传接口
-            errImgName:[],
-            pid:"",
             isshow:false,
             pickerFilter:"",
             // 下拉列表初始数据
@@ -117,6 +98,7 @@ export default {
                 { id: "WTTX_RSCX", text: "人寿财险" },
                 { id: "WTTX_HTBX", text: "华泰保险" },
                 { id: 'WTTX_RBCX', text: "湖南人保" },
+                { id: "WTTX_YTCX", text: "亚太财险" },
                 { id: "WTTX_ZHBX", text: "中华保险" },
                 { id: "WTTX_ZTBX", text: "永诚保险" },
                 
@@ -127,35 +109,47 @@ export default {
         }
     },
     computed: mapState({ users: state => state }),
-    components:{
-        "uploader":uploader
-    },
     methods: {
         submit(){
             
             let _this = this;
             let parms = _this.form;
-            if( !parms.insurername ){
+            if( !parms.insurername.replace(/\s/g,"") ){
                 MessageBox('提示', '保险公司不能为空！');
                 return;
             }
-            if( !parms.tmscode ){
+            if( !parms.TMSCode.replace(/\s/g,"") ){
                 MessageBox('提示', '企业ID不能为空！');
                 return;
             }
-            if( !parms.name ){
+            if( !parms.Name.replace(/\s/g,"") ){
                 MessageBox('提示', '公司名称不能为空！');
                 return;
             }
-            if( !parms.amount || parms.amount <= 0){
-                MessageBox('提示', '充值金额必须大于等于0！');
+            if( !parms.LegalPerson.replace(/\s/g,"") ){
+                MessageBox('提示', '法人名称不能为空！');
                 return;
             }
-            if( !parms.yewuyuan.replace(/\s/g,"") ){
-                MessageBox('提示', '业务员不能为空！');
+            if( !checkID.check(parms.LP_IDCard) ){
+                MessageBox('提示', '法人身份证不正确！');
                 return;
             }
-
+            if( !parms.comaddr.replace(/\s/g,"") ){
+                MessageBox('提示', '公司地址不能为空！');
+                return;
+            }
+            if( !/^1[3-9]\d{9}$/.test(parms.LoginName) ){
+                MessageBox('提示', '手机号码不正确！');
+                return;
+            }
+            // if( !parms.password.replace(/\s/g,"") ){
+            //     MessageBox('提示', '密码不能为空！');
+            //     return;
+            // }
+            // if( parms.password != parms.cpassword){
+            //     MessageBox('提示', '确认密码跟密码不一致！');
+            //     return;
+            // }
             Indicator.open({
                 text: '保存中...',
                 spinnerType: 'fading-circle'
@@ -164,42 +158,28 @@ export default {
             
             _this.$http({
                 method:"post",
-                url:"/CommonInsurer/UpdateCompanyAccount",
+                url:"/Insurer/InsurerRegAdd",
                 data:parms
             }).then(response => {
-                let result = response.data
+                let result = JSON.parse(response.data)
                 Indicator.close();
-                if( result._status){
+                if( result.code == 10000){
                     
-                    _this.pid = result._message;
-                    if( _this.$refs.uploader.files.length == 0 ){
-                        let suc = Toast({
-                            message: '充值成功',
-                            iconClass: 'icon icon-success'
-                        });
-                        setTimeout(() => {
-                            suc.close();
-                            if(this.isHomeCome){
-                                _this.clearData();
-                            }else{
-                                _this.hide("refresh");
-                            }
-                        }, 500);
-                    }else{
-                        let suc = Toast({
-                            message: '充值成功,现在正在上传图片，请勿关闭',
-                            iconClass: 'icon icon-success'
-                        });
-                        setTimeout(() => {
-                            suc.close();
-                            _this.$refs.uploader.submit(_this.pid);
-                        }, 500);
-                        
-                    }
-                    
+                    let suc = Toast({
+                        message: '注册成功',
+                        iconClass: 'icon icon-success'
+                    });
+                    setTimeout(() => {
+                        suc.close();
+                        if(this.isHomeCome){
+                            _this.clearData();
+                        }else{
+                            _this.hide("refresh");
+                        }
+                    }, 500);
                     
                 }else{
-                    MessageBox('提示', result._message || "查无数据");
+                    MessageBox('提示', result.msg || "查无数据");
                 }
             }, result => {
                 Indicator.close();
@@ -218,52 +198,6 @@ export default {
         },
         hide(refresh){
             this.$emit('hide',refresh); 
-        },
-        setData(data){
-            this.form.coidinsurer = data.CoidInsurer
-            this.form.insurername = data.InsurerName
-            this.form.coid = data.COId
-            this.form.tmscode = data.TMSCode
-            this.form.name = data.Name
-            this.form.amount = ""
-            this.form.yewuyuan = ""
-            this.form.remark = ""
-            this.form.createby = this.users.userInfo.userid
-            this.errImgName = []
-            this.pid = ""
-            // 初始化上传控件
-            this.$refs.uploader.finished()
-        },
-        // 所有图片上传完成之后触发这个
-        uploadedComplete(){
-            let _this = this;
-            let errImgLength = _this.errImgName.length;
-            let allImgLength = _this.$refs.uploader.files.length;
-            let sucImgLength = allImgLength - errImgLength;
-            
-            let title = sucImgLength+"张图片上传成功！"
-            if( errImgLength > 0 ){
-                title+=errImgLength+"张图片上传失败！"
-            }
-
-            let suc = Toast({
-                message:title,
-                iconClass: 'icon icon-success'
-            });
-            setTimeout(() => {
-                suc.close();
-                Indicator.close();
-                if(this.isHomeCome){
-                    _this.clearData();
-                }else{
-                    _this.hide("refresh");
-                }
-                
-            }, 1000);
-        },
-        // 上传图片失败的时候，把失败的图片信息存进去，告知用户
-        uploaderError(data){
-            this.errImgName.push(data.name)
         },
         // 下拉筛选数据
         filterData(val){
@@ -362,11 +296,7 @@ export default {
             for( var key in this.form ){
                 this.form[key] = ""
             }
-            this.form.createby = this.users.userInfo.userid;
-            this.$refs.uploader.finished()
-            this.errImgName = []
-            this.pid = ""
-        }
+        },
     },
     watch:{
         // 监听输入值的变化进行筛选
@@ -382,7 +312,58 @@ export default {
         }
     }
 }
-
+var checkID = {
+    check:function (val) {
+        if(this.checkCode(val)) {
+            var date = val.substring(6,14);
+            if(this.checkDate(date)) {
+                if(this.checkProv(val.substring(0,2))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+    checkCode:function (val) {
+        var p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
+        var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
+        var code = val.substring(17);
+        if(p.test(val)) {
+            var sum = 0;
+            for(var i=0;i<17;i++) {
+                sum += val[i]*factor[i];
+            }
+            if(parity[sum % 11] == code.toUpperCase()) {
+                return true;
+            }
+        }
+        return false;
+    },
+    checkDate:function (val) {
+        var pattern = /^(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)$/;
+        if(pattern.test(val)) {
+            var year = val.substring(0, 4);
+            var month = val.substring(4, 6);
+            var date = val.substring(6, 8);
+            var date2 = new Date(year+"-"+month+"-"+date);
+            if(date2 && date2.getMonth() == (parseInt(month) - 1)) {
+                return true;
+            }
+        }
+        return false;
+    },
+    checkProv:function (val) {
+        var pattern = /^[1-9][0-9]/;
+        var provs = {11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门"};
+        if(pattern.test(val)) {
+            if(provs[val]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 </script>
 <style type="text/css">
     .mint-indicator{
@@ -460,5 +441,22 @@ export default {
             float: right;
             margin-left: 1rem;
         }
+    }
+    .search-out{
+        display: flex;
+        background-color: #fff;
+        justify-content: center;
+        align-items: center;
+    }
+    .search-btn{
+        width: 60px;
+        height: 30px;
+        background-color: #26a2ff;
+        color: #fff;
+        border: 0 none;
+        outline: none;
+        border-radius: 5px;
+        margin-right: 10px;
+        cursor: pointer;
     }
 </style>

@@ -43,10 +43,13 @@ export default {
                 name:"",//公司名称
             },
             options:[
-                { value: 'WTTX_RBCX', label: "湖南人保" },
                 { value: "WTTX_RBCX_NEW", label: "云南人保" },
+                { value: "WTTX_RSCX", label: "人寿财险" },
+                { value: "WTTX_HTBX", label: "华泰保险" },
+                { value: 'WTTX_RBCX', label: "湖南人保" },
                 { value: "WTTX_ZHBX", label: "中华保险" },
                 { value: "WTTX_ZTBX", label: "永诚保险" },
+                { value: "WTTX_TPYBX", label: "太平洋保险" },
             ]
         }
     },

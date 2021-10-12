@@ -99,7 +99,7 @@
                         }, 1000);
                     }else{
                         Toast({
-                            message: result._message,
+                            message: result._message || result,
                             position: 'top',
                             duration: 3000
                         });

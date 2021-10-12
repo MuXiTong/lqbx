@@ -156,10 +156,13 @@ export default {
             ],
             slotsValueKey:"text",
             bxgsData:[
-                { id: 'WTTX_RBCX', text: "湖南人保" },
                 { id: "WTTX_RBCX_NEW", text: "云南人保" },
+                { id: "WTTX_RSCX", text: "人寿财险" },
+                { id: "WTTX_HTBX", text: "华泰保险" },
+                { id: 'WTTX_RBCX', text: "湖南人保" },
                 { id: "WTTX_ZHBX", text: "中华保险" },
                 { id: "WTTX_ZTBX", text: "永诚保险" },
+                { id: "WTTX_TPYBX", text: "太平洋保险" },
             ],
             pickerSelVal:"",
             // 时间控件用到

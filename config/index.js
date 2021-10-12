@@ -4,7 +4,8 @@ var path = require('path')
 var proxyTable = {
   '/wl':{
       // target:'http://localhost:4203',
-      target:'http://101.200.223.46:5568',
+      // target:'http://101.200.223.46:5568',
+      target:'http://lqbx.lqfast.com:6846',
       changeOrigin:true,
       pathRewrite:{
           '^/wl':''
@@ -49,7 +50,7 @@ module.exports = {
   devServer: {
     historyApiFallbak: true,
     hot: true,
-    host: "192.168.0.90",   //填写你自己的IP地址
+    host: "192.168.1.194",   //填写你自己的IP地址
     port: 8081,   //填写刚刚在dev字段中找到的port端口号
     inline: true,
     progress: true

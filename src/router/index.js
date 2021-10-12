@@ -12,6 +12,9 @@ const zhrecord = resolve => require(['@/pages/lanbaoCenter/cz/zhrecord'], resolv
 const yjrecord = resolve => require(['@/pages/lanbaoCenter/cz/yjrecord'], resolve)
 const czzjrecord = resolve => require(['@/pages/lanbaoCenter/cz/czzjrecord'], resolve)
 const nbManagement = resolve => require(['@/pages/lanbaoCenter/nb/nbManagement'], resolve)
+const recharge = resolve => require(['@/pages/lanbaoCenter/cz/rechargeMoney'], resolve)
+const signContract = resolve => require(['@/pages/lanbaoCenter/cz/signContract'], resolve)
+const register = resolve => require(['@/pages/lanbaoCenter/cz/register'], resolve)
 
 Vue.use(Router)
 
@@ -68,6 +71,24 @@ export default new Router({
                     path: '/nbManagement', //年保管理
                     name: 'nbManagement', //年保管理
                     component: nbManagement
+                },
+                {
+                    path: '/recharge', //快速充值
+                    name: 'recharge', //快速充值
+                    meta: { isHomeCome: true },
+                    component: recharge
+                },
+                {
+                    path: '/signContract', //保险签约
+                    name: 'signContract', //保险签约
+                    meta: { isHomeCome: true },
+                    component: signContract
+                },
+                {
+                    path: '/register', //保险注册
+                    name: 'register', //保险注册
+                    meta: { isHomeCome: true },
+                    component: register
                 },
                 {
                     path: '*', //其他页面，强制跳转到登录页面

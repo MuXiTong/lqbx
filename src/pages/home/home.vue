@@ -22,6 +22,9 @@
           {
             title:"蓝保中心",
             children:[
+              {name:"快速充值",icon:'add',url:"recharge"},
+              {name:"保险注册",icon:'add',url:"register"},
+              {name:"保险签约",icon:'add',url:"signContract"},
               {name:"签约记录",icon:'record',url:"czrecord"},
               {name:"账户记录",icon:'record',url:"zhrecord"},
               {name:"预警记录",icon:'record',url:"yjrecord"},

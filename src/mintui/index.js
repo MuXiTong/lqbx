@@ -18,6 +18,7 @@ import {
     Spinner,
     Actionsheet,
     Checklist,
+    Switch,
 } from 'mint-ui'
 
 Vue.component(Button.name, Button)
@@ -35,5 +36,6 @@ Vue.component(Popup.name, Popup);
 Vue.component(Spinner.name, Spinner);
 Vue.component(Actionsheet.name, Actionsheet);
 Vue.component(Checklist.name, Checklist);
+Vue.component(Switch.name, Switch);
 // Vue.use(Lazyload);
 Vue.use(InfiniteScroll);

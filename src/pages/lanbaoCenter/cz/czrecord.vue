@@ -45,7 +45,7 @@
                                     </div>
                                     <div>
                                         <span class="label">账户状态：</span>
-                                        <span v-if="data.Balance" class="green">已开通</span>
+                                        <span v-if="data.Income > 0" class="green">已开通</span>
                                         <span v-else class="red">未开通</span>
                                         &emsp;
                                         <span v-show="data.Balance" class="label">剩余保费：</span>
