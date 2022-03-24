@@ -5,7 +5,8 @@ var proxyTable = {
   '/wl':{
       // target:'http://localhost:4203',
       // target:'http://101.200.223.46:5568',
-      target:'http://lqbx.lqfast.com:6846',
+      // target:'http://lqbx.lqfast.com:6846',
+      target:'https://lqbx.lqfast.com',
       changeOrigin:true,
       pathRewrite:{
           '^/wl':''

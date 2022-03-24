@@ -56,7 +56,7 @@
                                         
                                     </div>
                                     <div class="btn-body">
-                                        <mt-button type="primary" size="small" @click.native="rechargehandle(i)">充值</mt-button>
+                                        <mt-button type="primary" size="small" @click.native="rechargehandle(i)" v-if="['华泰保险','太平洋保险'].includes(data.InsurerName)">充值</mt-button>
                                         <mt-button type="primary" size="small" @click.native="rechargeDetailHandle(i)">详情</mt-button>
                                     </div>
                                 </div>

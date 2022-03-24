@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="record-list-icon">{{i+1}}</div>
-                            <div class="record-list-acc">
+                            <div class="record-list-acc" v-if="['华泰保险','太平洋保险'].includes(data.InsurerName)" >
                                 <mt-button type="primary" size="small" @click.native="rechargehandle(i)">充值</mt-button>
                             </div>
                         </li>

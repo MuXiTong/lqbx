@@ -119,8 +119,8 @@ export default {
                 // { COId: "WTTX_RSCX", Name: "人寿财险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
                 { COId: "WTTX_HTBX", Name: "华泰保险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
 
-                { COId: 'WTTX_RBCX', Name: "湖南人保",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
-                { COId: 'WTTX_YTCX', Name: "亚太财险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
+                // { COId: 'WTTX_RBCX', Name: "湖南人保",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
+                // { COId: 'WTTX_YTCX', Name: "亚太财险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
                 // { COId: "WTTX_ZHBX", Name: "中华保险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
                 // { COId: "WTTX_ZTBX", Name: "永诚保险",IsUseSign:false,IsUseDefault:false,DefaultAmountForUnit:0,DefaultAmountForCar:0,IsStepForCar:0,IsStepForUnit:0,StepForCar:"",StepForUnit:"" },
             ],
